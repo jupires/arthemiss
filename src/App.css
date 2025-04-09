@@ -21,6 +21,7 @@
   flex-direction: column;
   background-color: #f5f5f5;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  touch-action: pan-y;
 }
 
 .App-header {
@@ -39,28 +40,11 @@
   font-weight: 500;
 }
 
-.hamburger-menu {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 21px;
-  width: 25px;
-  cursor: pointer;
-  z-index: 20;
-}
-
-.hamburger-line {
-  height: 3px;
-  width: 100%;
-  background-color: var(--text-light);
-  border-radius: 2px;
-  transition: var(--transition);
-}
-
 .App-body {
   display: flex;
   flex: 1;
   position: relative;
+  overflow: hidden;
 }
 
 .sidebar {
@@ -72,8 +56,9 @@
   left: 0;
   z-index: 15;
   transform: translateX(-100%);
-  transition: var(--transition);
+  transition: transform var(--transition);
   overflow: hidden;
+  touch-action: none;
 }
 
 .sidebar.open {
@@ -137,6 +122,7 @@
   padding: 2rem;
   min-height: calc(100vh - 60px);
   overflow: auto;
+  width: 100%;
 }
 
 .App-main.shifted {
