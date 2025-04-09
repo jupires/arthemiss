@@ -9,6 +9,7 @@ import CepFinder from './components/CepFinder';
 
 function App() {
   const [activeComponent, setActiveComponent] = useState('TodoList');
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const renderComponent = () => {
     switch (activeComponent) {
@@ -21,49 +22,67 @@ function App() {
     }
   };
 
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
+
   return (
     <div className="App">
       <header className="App-header">
+        <div className="hamburger-menu" onClick={toggleMenu}>
+          <div className="hamburger-line"></div>
+          <div className="hamburger-line"></div>
+          <div className="hamburger-line"></div>
+        </div>
         <h1>Projeto React</h1>
       </header>
 
       <div className="App-body">
-        <nav className="sidebar">
+        <nav className={`sidebar ${isMenuOpen ? 'open' : ''}`}>
           <ul className="nav-menu">
             <li 
-              onClick={() => setActiveComponent('TodoList')}
+              onClick={() => { setActiveComponent('TodoList'); closeMenu(); }}
               className={activeComponent === 'TodoList' ? 'active' : ''}
             >
-              To-Do List
+              <span className="icon">📝</span>
+              <span className="menu-text">To-Do List</span>
             </li>
             <li 
-              onClick={() => setActiveComponent('ClickCounter')}
+              onClick={() => { setActiveComponent('ClickCounter'); closeMenu(); }}
               className={activeComponent === 'ClickCounter' ? 'active' : ''}
             >
-              Contador de Cliques
+              <span className="icon">🔢</span>
+              <span className="menu-text">Contador de Cliques</span>
             </li>
             <li 
-              onClick={() => setActiveComponent('TicTacToe')}
+              onClick={() => { setActiveComponent('TicTacToe'); closeMenu(); }}
               className={activeComponent === 'TicTacToe' ? 'active' : ''}
             >
-              Jogo da Velha
+              <span className="icon">⭕</span>
+              <span className="menu-text">Jogo da Velha</span>
             </li>
             <li 
-              onClick={() => setActiveComponent('Calculator')}
+              onClick={() => { setActiveComponent('Calculator'); closeMenu(); }}
               className={activeComponent === 'Calculator' ? 'active' : ''}
             >
-              Calculadora
+              <span className="icon">🧮</span>
+              <span className="menu-text">Calculadora</span>
             </li>
             <li 
-              onClick={() => setActiveComponent('CepFinder')}
+              onClick={() => { setActiveComponent('CepFinder'); closeMenu(); }}
               className={activeComponent === 'CepFinder' ? 'active' : ''}
             >
-              Buscador de CEP
+              <span className="icon">📍</span>
+              <span className="menu-text">Buscador de CEP</span>
             </li>
           </ul>
         </nav>
 
-        <main className="App-main">
+        <main className={`App-main ${isMenuOpen ? 'shifted' : ''}`}>
           <div className="component-container">
             {renderComponent()}
           </div>
