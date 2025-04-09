@@ -42,31 +42,28 @@
 .App-body {
   display: flex;
   flex: 1;
-  position: relative;
 }
 
 .sidebar {
   background-color: var(--secondary-color);
-  width: 60px;
+  width: 50px;
+  height: calc(100vh - 60px);
   overflow: hidden;
   transition: var(--transition);
-  height: 100%;
   position: fixed;
-  z-index: 1;
-  top: 0;
+  top: 60px;
   left: 0;
-  padding-top: 4rem;
 }
 
 .sidebar:hover {
-  width: 250px;
+  width: 200px;
 }
 
 .nav-menu {
   list-style: none;
   padding: 1rem 0;
   margin: 0;
-  width: 250px;
+  width: 200px;
 }
 
 .nav-menu li {
@@ -76,9 +73,6 @@
   transition: var(--transition);
   font-size: 1rem;
   text-align: left;
-  display: flex;
-  align-items: center;
-  white-space: nowrap;
 }
 
 .nav-menu li:hover {
@@ -86,29 +80,15 @@
   color: var(--text-dark);
 }
 
-.nav-menu li::before {
-  content: '→';
-  margin-right: 0.8rem;
-  opacity: 0;
-  transition: var(--transition);
-}
-
-.nav-menu li:hover::before {
-  opacity: 1;
-}
-
 .App-main {
   flex: 1;
   padding: 2rem;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  margin-left: 50px;
   transition: var(--transition);
-  margin-left: 60px;
 }
 
 .sidebar:hover + .App-main {
-  margin-left: 250px;
+  margin-left: 200px;
 }
 
 .component-container {
@@ -137,14 +117,6 @@
   
   .sidebar:hover + .App-main {
     margin-left: 200px;
-  }
-  
-  .App-main {
-    padding: 1rem;
-  }
-  
-  .component-container {
-    padding: 1.5rem;
   }
 }
 
