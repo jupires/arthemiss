@@ -7,34 +7,67 @@
 
 .App-header {
   background-color: #282c34;
-  padding: 20px;
   color: white;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.App-header h1 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.menu-toggle {
+  position: absolute;
+  left: 20px;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.App-body {
+  display: flex;
+  flex: 1;
+}
+
+.sidebar {
+  background-color: #20232a;
+  width: 0;
+  overflow: hidden;
+  transition: width 0.3s ease;
+}
+
+.sidebar.aberto {
+  width: 200px;
 }
 
 .nav-menu {
-  display: flex;
-  justify-content: center;
   list-style: none;
-  padding: 0;
-  margin: 20px 0 0;
+  padding: 20px;
+  margin: 0;
 }
 
 .nav-menu li {
-  margin: 0 15px;
-  padding: 10px 15px;
+  padding: 12px;
+  color: white;
   cursor: pointer;
-  border-radius: 5px;
-  transition: background-color 0.3s;
+  border-radius: 4px;
+  transition: background 0.3s;
 }
 
 .nav-menu li:hover {
   background-color: #61dafb;
-  color: #282c34;
+  color: #20232a;
 }
 
 .App-main {
   flex: 1;
-  padding: 20px;
+  padding: 30px;
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -43,9 +76,9 @@
 .component-container {
   max-width: 800px;
   width: 100%;
-  margin: 0 auto;
   padding: 20px;
   border: 1px solid #ddd;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background: white;
 }
