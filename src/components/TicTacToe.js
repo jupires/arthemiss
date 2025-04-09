@@ -1,178 +1,129 @@
-:root {
-  --primary: #4361ee;
-  --secondary: #3f37c9;
-  --accent: #4895ef;
-  --light: #f8f9fa;
-  --dark: #212529;
-  --success: #4cc9f0;
-  --danger: #f72585;
-  --border-radius: 10px;
-  --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  --transition: all 0.3s ease;
+import { useState } from 'react';
+
+function Square({ value, onSquareClick, isWinning }) {
+  return (
+    <button 
+      className={`square ${isWinning ? 'winning' : ''} ${value ? 'filled' : ''}`} 
+      onClick={onSquareClick}
+    >
+      {value && <span className={`symbol ${value}`}>{value}</span>}
+    </button>
+  );
 }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: 'Poppins', sans-serif;
-}
-
-body {
-  background-color: #f5f7fa;
-  color: var(--dark);
-  line-height: 1.6;
-}
-
-.app {
-  max-width: 800px;
-  margin: 2rem auto;
-  padding: 1rem;
-  text-align: center;
-}
-
-h1 {
-  color: var(--primary);
-  margin-bottom: 1.5rem;
-  font-size: 2.5rem;
-}
-
-.game {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  align-items: center;
-}
-
-@media (min-width: 768px) {
-  .game {
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: center;
+function Board({ xIsNext, squares, onPlay }) {
+  function handleClick(i) {
+    if (calculateWinner(squares).winner || squares[i]) return;
+    
+    const nextSquares = squares.slice();
+    nextSquares[i] = xIsNext ? 'X' : 'O';
+    onPlay(nextSquares, i);
   }
+
+  const { winner, line } = calculateWinner(squares);
+  let status;
+  if (winner) {
+    status = `Winner: ${winner}`;
+  } else if (squares.every(square => square)) {
+    status = 'Game ended in a draw!';
+  } else {
+    status = `Next player: ${xIsNext ? 'X' : 'O'}`;
+  }
+
+  // Cria os quadrados de forma mais dinâmica
+  const renderSquare = (i) => (
+    <Square 
+      key={i}
+      value={squares[i]} 
+      onSquareClick={() => handleClick(i)}
+      isWinning={line && line.includes(i)}
+    />
+  );
+
+  return (
+    <div className="game-container">
+      <div className="status">{status}</div>
+      <div className="board">
+        {[...Array(3)].map((_, row) => (
+          <div key={row} className="board-row">
+            {[...Array(3)].map((_, col) => renderSquare(row * 3 + col))}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }
 
-.game-container {
-  background: white;
-  padding: 2rem;
-  border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow);
+export default function Game() {
+  const [history, setHistory] = useState([{ squares: Array(9).fill(null), moveLocation: null }]);
+  const [currentMove, setCurrentMove] = useState(0);
+  const [isAscending, setIsAscending] = useState(true);
+  const currentSquares = history[currentMove].squares;
+  const xIsNext = currentMove % 2 === 0;
+
+  function handlePlay(nextSquares, moveIndex) {
+    const row = Math.floor(moveIndex / 3) + 1;
+    const col = (moveIndex % 3) + 1;
+    const nextHistory = [
+      ...history.slice(0, currentMove + 1),
+      { squares: nextSquares, moveLocation: { row, col } }
+    ];
+    setHistory(nextHistory);
+    setCurrentMove(nextHistory.length - 1);
+  }
+
+  function jumpTo(nextMove) {
+    setCurrentMove(nextMove);
+  }
+
+  const moves = history.map((step, move) => {
+    const desc = move ? 
+      `Go to move #${move} (${step.moveLocation.row},${step.moveLocation.col})` : 
+      'Go to game start';
+    
+    return (
+      <li key={move}>
+        <button 
+          onClick={() => jumpTo(move)}
+          className={move === currentMove ? 'current-move' : ''}
+        >
+          {desc}
+        </button>
+      </li>
+    );
+  });
+
+  return (
+    <div className="app">
+      <h1>Tic Tac Toe</h1>
+      <div className="game">
+        <div className="game-board">
+          <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
+        </div>
+        <div className="game-info">
+          <div className="controls">
+            <button onClick={() => setIsAscending(!isAscending)}>
+              Sort: {isAscending ? 'Ascending' : 'Descending'}
+            </button>
+          </div>
+          <ol>{isAscending ? moves : moves.reverse()}</ol>
+        </div>
+      </div>
+    </div>
+  );
 }
 
-.status {
-  margin-bottom: 1rem;
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: var(--secondary);
-}
+function calculateWinner(squares) {
+  const lines = [
+    [0, 1, 2], [3, 4, 5], [6, 7, 8], // rows
+    [0, 3, 6], [1, 4, 7], [2, 5, 8], // columns
+    [0, 4, 8], [2, 4, 6]             // diagonals
+  ];
 
-.board {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.board-row {
-  display: flex;
-  gap: 0.5rem;
-}
-
-.square {
-  width: 80px;
-  height: 80px;
-  background: var(--light);
-  border: 2px solid #e9ecef;
-  border-radius: var(--border-radius);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2.5rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: var(--transition);
-}
-
-.square:hover {
-  background: #e9ecef;
-  transform: translateY(-2px);
-}
-
-.square.filled {
-  cursor: not-allowed;
-}
-
-.square.winning {
-  background-color: rgba(67, 97, 238, 0.2);
-  border-color: var(--primary);
-}
-
-.symbol {
-  display: inline-block;
-  transition: var(--transition);
-}
-
-.symbol.X {
-  color: var(--primary);
-}
-
-.symbol.O {
-  color: var(--danger);
-}
-
-.game-info {
-  background: white;
-  padding: 1.5rem;
-  border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow);
-  width: 100%;
-  max-width: 300px;
-}
-
-.controls {
-  margin-bottom: 1rem;
-}
-
-button {
-  background-color: var(--primary);
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: var(--transition);
-  font-weight: 500;
-}
-
-button:hover {
-  background-color: var(--secondary);
-  transform: translateY(-2px);
-}
-
-.current-move {
-  font-weight: bold;
-  background-color: var(--accent) !important;
-}
-
-ol {
-  list-style: none;
-  padding: 0;
-  max-height: 400px;
-  overflow-y: auto;
-}
-
-li {
-  margin-bottom: 0.5rem;
-}
-
-li button {
-  width: 100%;
-  text-align: left;
-  background: none;
-  color: var(--dark);
-  padding: 0.5rem;
-}
-
-li button:hover {
-  background: #f0f2f5;
-  color: var(--primary);
+  for (const [a, b, c] of lines) {
+    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+      return { winner: squares[a], line: [a, b, c] };
+    }
+  }
+  return { winner: null, line: null };
 }
