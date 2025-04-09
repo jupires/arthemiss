@@ -48,7 +48,7 @@ function App() {
               onClick={() => { setActiveComponent('TodoList'); closeMenu(); }}
               className={activeComponent === 'TodoList' ? 'active' : ''}
             >
-              <span className="icon">📝</span>
+              <span className="icon">🖋️</span>
               <span className="menu-text">To-Do List</span>
             </li>
             <li 
