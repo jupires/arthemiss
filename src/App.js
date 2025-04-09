@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 
 import TodoList from './components/TodoList';
@@ -10,7 +10,6 @@ import CepFinder from './components/CepFinder';
 function App() {
   const [activeComponent, setActiveComponent] = useState('TodoList');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [touchStartX, setTouchStartX] = useState(null);
 
   const renderComponent = () => {
     switch (activeComponent) {
@@ -23,49 +22,22 @@ function App() {
     }
   };
 
-  // Funções para o gesto de deslize
-  const handleTouchStart = (e) => {
-    setTouchStartX(e.touches[0].clientX);
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
   };
 
-  const handleTouchMove = (e) => {
-    if (touchStartX === null) return;
-    
-    const touchEndX = e.touches[0].clientX;
-    const differenceX = touchStartX - touchEndX;
-
-    // Deslize para direita (abrir menu)
-    if (differenceX < -50 && !isMenuOpen) {
-      setIsMenuOpen(true);
-      setTouchStartX(null);
-    }
-    // Deslize para esquerda (fechar menu)
-    else if (differenceX > 50 && isMenuOpen) {
-      setIsMenuOpen(false);
-      setTouchStartX(null);
-    }
+  const closeMenu = () => {
+    setIsMenuOpen(false);
   };
-
-  const handleTouchEnd = () => {
-    setTouchStartX(null);
-  };
-
-  // Adiciona os event listeners
-  useEffect(() => {
-    document.addEventListener('touchstart', handleTouchStart);
-    document.addEventListener('touchmove', handleTouchMove);
-    document.addEventListener('touchend', handleTouchEnd);
-
-    return () => {
-      document.removeEventListener('touchstart', handleTouchStart);
-      document.removeEventListener('touchmove', handleTouchMove);
-      document.removeEventListener('touchend', handleTouchEnd);
-    };
-  }, [isMenuOpen, touchStartX]);
 
   return (
     <div className="App">
       <header className="App-header">
+        <div className="hamburger-menu" onClick={toggleMenu}>
+          <div className="hamburger-line"></div>
+          <div className="hamburger-line"></div>
+          <div className="hamburger-line"></div>
+        </div>
         <h1>Projeto React</h1>
       </header>
 
@@ -73,33 +45,38 @@ function App() {
         <nav className={`sidebar ${isMenuOpen ? 'open' : ''}`}>
           <ul className="nav-menu">
             <li 
-              onClick={() => setActiveComponent('TodoList')}
+              onClick={() => { setActiveComponent('TodoList'); closeMenu(); }}
               className={activeComponent === 'TodoList' ? 'active' : ''}
             >
+              <span className="icon">📝</span>
               <span className="menu-text">To-Do List</span>
             </li>
             <li 
-              onClick={() => setActiveComponent('ClickCounter')}
+              onClick={() => { setActiveComponent('ClickCounter'); closeMenu(); }}
               className={activeComponent === 'ClickCounter' ? 'active' : ''}
             >
+              <span className="icon">🔢</span>
               <span className="menu-text">Contador de Cliques</span>
             </li>
             <li 
-              onClick={() => setActiveComponent('TicTacToe')}
+              onClick={() => { setActiveComponent('TicTacToe'); closeMenu(); }}
               className={activeComponent === 'TicTacToe' ? 'active' : ''}
             >
+              <span className="icon">⭕</span>
               <span className="menu-text">Jogo da Velha</span>
             </li>
             <li 
-              onClick={() => setActiveComponent('Calculator')}
+              onClick={() => { setActiveComponent('Calculator'); closeMenu(); }}
               className={activeComponent === 'Calculator' ? 'active' : ''}
             >
+              <span className="icon">🧮</span>
               <span className="menu-text">Calculadora</span>
             </li>
             <li 
-              onClick={() => setActiveComponent('CepFinder')}
+              onClick={() => { setActiveComponent('CepFinder'); closeMenu(); }}
               className={activeComponent === 'CepFinder' ? 'active' : ''}
             >
+              <span className="icon">📍</span>
               <span className="menu-text">Buscador de CEP</span>
             </li>
           </ul>
