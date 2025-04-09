@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import './App.css';
 
 import TodoList from './components/TodoList';
@@ -10,6 +10,9 @@ import CepFinder from './components/CepFinder';
 function App() {
   const [activeComponent, setActiveComponent] = useState('TodoList');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [startX, setStartX] = useState(null);
+  const sidebarRef = useRef(null);
+  const appBodyRef = useRef(null);
 
   const renderComponent = () => {
     switch (activeComponent) {
@@ -22,9 +25,48 @@ function App() {
     }
   };
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
+  const handleTouchStart = (e) => {
+    setStartX(e.touches[0].clientX);
   };
+
+  const handleTouchMove = (e) => {
+    if (startX === null) return;
+    
+    const currentX = e.touches[0].clientX;
+    const diffX = currentX - startX;
+
+    // Abre o menu se deslizar da esquerda para direita
+    if (diffX > 50 && !isMenuOpen) {
+      setIsMenuOpen(true);
+      setStartX(null);
+    }
+    // Fecha o menu se deslizar da direita para esquerda
+    else if (diffX < -50 && isMenuOpen) {
+      setIsMenuOpen(false);
+      setStartX(null);
+    }
+  };
+
+  const handleTouchEnd = () => {
+    setStartX(null);
+  };
+
+  useEffect(() => {
+    const appBody = appBodyRef.current;
+    if (appBody) {
+      appBody.addEventListener('touchstart', handleTouchStart);
+      appBody.addEventListener('touchmove', handleTouchMove);
+      appBody.addEventListener('touchend', handleTouchEnd);
+    }
+
+    return () => {
+      if (appBody) {
+        appBody.removeEventListener('touchstart', handleTouchStart);
+        appBody.removeEventListener('touchmove', handleTouchMove);
+        appBody.removeEventListener('touchend', handleTouchEnd);
+      }
+    };
+  }, [isMenuOpen, startX]);
 
   const closeMenu = () => {
     setIsMenuOpen(false);
@@ -33,16 +75,11 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <div className="hamburger-menu" onClick={toggleMenu}>
-          <div className="hamburger-line"></div>
-          <div className="hamburger-line"></div>
-          <div className="hamburger-line"></div>
-        </div>
         <h1>Projeto React</h1>
       </header>
 
-      <div className="App-body">
-        <nav className={`sidebar ${isMenuOpen ? 'open' : ''}`}>
+      <div className="App-body" ref={appBodyRef}>
+        <nav className={`sidebar ${isMenuOpen ? 'open' : ''}`} ref={sidebarRef}>
           <ul className="nav-menu">
             <li 
               onClick={() => { setActiveComponent('TodoList'); closeMenu(); }}
