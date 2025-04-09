@@ -9,7 +9,6 @@ import CepFinder from './components/CepFinder';
 
 function App() {
   const [activeComponent, setActiveComponent] = useState('TodoList');
-  const [menuAberto, setMenuAberto] = useState(false);
 
   const renderComponent = () => {
     switch (activeComponent) {
@@ -25,14 +24,11 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <button className="menu-toggle" onClick={() => setMenuAberto(!menuAberto)}>
-          &#9776;
-        </button>
         <h1>Projeto React</h1>
       </header>
 
       <div className="App-body">
-        <nav className={`sidebar ${menuAberto ? 'aberto' : ''}`}>
+        <nav className="sidebar">
           <ul className="nav-menu">
             <li onClick={() => setActiveComponent('TodoList')}>To-Do List</li>
             <li onClick={() => setActiveComponent('ClickCounter')}>Contador de Cliques</li>
