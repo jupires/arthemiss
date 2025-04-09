@@ -1,0 +1,184 @@
+:root {
+    --primary: #4361ee;
+    --primary-dark: #3a56d4;
+    --secondary: #f72585;
+    --secondary-dark: #e01a6e;
+    --light-bg: #f8f9fa;
+    --light-text: #212529;
+    --dark-bg: #212529;
+    --dark-text: #f8f9fa;
+    --border-radius: 12px;
+    --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+  }
+  
+  .click-counter {
+    max-width: 500px;
+    margin: 2rem auto;
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    background-color: var(--light-bg);
+    color: var(--light-text);
+    box-shadow: var(--box-shadow);
+    transition: var(--transition);
+  }
+  
+  .click-counter.dark {
+    background-color: var(--dark-bg);
+    color: var(--dark-text);
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  h2 {
+    margin: 0;
+    color: var(--primary);
+    font-size: 1.8rem;
+  }
+  
+  .counter-display {
+    text-align: center;
+    margin: 2rem 0;
+    transition: var(--transition);
+  }
+  
+  .counter-display.pop {
+    animation: pop 0.3s ease;
+  }
+  
+  @keyframes pop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+  }
+  
+  .count {
+    font-size: 4rem;
+    font-weight: bold;
+    display: block;
+    color: var(--primary);
+  }
+  
+  .label {
+    font-size: 1.2rem;
+    opacity: 0.8;
+  }
+  
+  .button-group {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+  }
+  
+  button {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+  }
+  
+  .primary-button {
+    background-color: var(--primary);
+    color: white;
+  }
+  
+  .primary-button:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .secondary-button {
+    background-color: var(--secondary);
+    color: white;
+  }
+  
+  .secondary-button:hover {
+    background-color: var(--secondary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .secondary-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+  
+  .theme-toggle {
+    background-color: transparent;
+    border: 2px solid var(--primary);
+    color: var(--primary);
+  }
+  
+  .theme-toggle:hover {
+    background-color: rgba(67, 97, 238, 0.1);
+  }
+  
+  .dark .theme-toggle {
+    border-color: var(--secondary);
+    color: var(--secondary);
+  }
+  
+  .dark .theme-toggle:hover {
+    background-color: rgba(247, 37, 133, 0.1);
+  }
+  
+  .history {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  
+  .dark .history {
+    border-top-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  .history h3 {
+    margin-top: 0;
+    color: var(--primary);
+  }
+  
+  .dark .history h3 {
+    color: var(--secondary);
+  }
+  
+  .history ul {
+    list-style: none;
+    padding: 0;
+    max-height: 200px;
+    overflow-y: auto;
+  }
+  
+  .history li {
+    padding: 0.5rem 0;
+    border-bottom: 1px dashed rgba(0, 0, 0, 0.1);
+  }
+  
+  .dark .history li {
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  .history li:last-child {
+    border-bottom: none;
+  }
+  
+  @media (max-width: 600px) {
+    .click-counter {
+      padding: 1.5rem;
+    }
+    
+    .button-group {
+      flex-direction: column;
+    }
+  }
