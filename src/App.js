@@ -30,16 +30,43 @@ function App() {
       <div className="App-body">
         <nav className="sidebar">
           <ul className="nav-menu">
-            <li onClick={() => setActiveComponent('TodoList')}>To-Do List</li>
-            <li onClick={() => setActiveComponent('ClickCounter')}>Contador de Cliques</li>
-            <li onClick={() => setActiveComponent('TicTacToe')}>Jogo da Velha</li>
-            <li onClick={() => setActiveComponent('Calculator')}>Calculadora</li>
-            <li onClick={() => setActiveComponent('CepFinder')}>Buscador de CEP</li>
+            <li 
+              onClick={() => setActiveComponent('TodoList')}
+              className={activeComponent === 'TodoList' ? 'active' : ''}
+            >
+              To-Do List
+            </li>
+            <li 
+              onClick={() => setActiveComponent('ClickCounter')}
+              className={activeComponent === 'ClickCounter' ? 'active' : ''}
+            >
+              Contador de Cliques
+            </li>
+            <li 
+              onClick={() => setActiveComponent('TicTacToe')}
+              className={activeComponent === 'TicTacToe' ? 'active' : ''}
+            >
+              Jogo da Velha
+            </li>
+            <li 
+              onClick={() => setActiveComponent('Calculator')}
+              className={activeComponent === 'Calculator' ? 'active' : ''}
+            >
+              Calculadora
+            </li>
+            <li 
+              onClick={() => setActiveComponent('CepFinder')}
+              className={activeComponent === 'CepFinder' ? 'active' : ''}
+            >
+              Buscador de CEP
+            </li>
           </ul>
         </nav>
 
         <main className="App-main">
-          {renderComponent()}
+          <div className="component-container">
+            {renderComponent()}
+          </div>
         </main>
       </div>
     </div>
