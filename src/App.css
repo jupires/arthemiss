@@ -54,6 +54,7 @@
   position: fixed;
   top: 60px;
   left: 0;
+  z-index: 10;
 }
 
 .sidebar:hover {
@@ -64,7 +65,7 @@
   list-style: none;
   padding: 1rem 0;
   margin: 0;
-  width: 100px;
+  width: 200px;
 }
 
 .nav-menu li {
@@ -72,8 +73,9 @@
   color: var(--text-light);
   cursor: pointer;
   transition: var(--transition);
-  font-size: 1rem;
+  font-size: 0.9rem;
   text-align: left;
+  white-space: nowrap;
 }
 
 .nav-menu li:hover {
@@ -87,10 +89,10 @@
   margin-left: 50px;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   padding: 2rem;
-  min-height: calc(100vh - 60px); /* para centralizar verticalmente */
-  overflow: hidden; /* isso previne que textos fiquem passando pra fora */
+  min-height: calc(100vh - 60px);
+  overflow: auto;
 }
 
 .sidebar:hover + .App-main {
@@ -110,23 +112,16 @@
 /* Responsive design */
 @media (max-width: 768px) {
   .sidebar {
-    background-color: var(--secondary-color);
     width: 50px;
     height: calc(100vh - 60px);
-    overflow: hidden;
-    white-space: nowrap;
-    transition: var(--transition);
-    position: fixed;
-    top: 60px;
-    left: 0;
-    z-index: 2;
   }
+  
   .sidebar:hover {
     width: 200px;
   }
   
   .App-main {
-    margin-left: 0;
+    margin-left: 50px;
   }
   
   .sidebar:hover + .App-main {
@@ -135,6 +130,10 @@
 }
 
 @media (max-width: 480px) {
+  .sidebar {
+    width: 40px;
+  }
+  
   .sidebar:hover {
     width: 100%;
   }
@@ -143,5 +142,9 @@
     margin-left: 0;
     opacity: 0.3;
     pointer-events: none;
+  }
+  
+  .component-container {
+    padding: 1rem;
   }
 }
