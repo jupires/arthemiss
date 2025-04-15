@@ -23,11 +23,11 @@ function Board({ xIsNext, squares, onPlay }) {
   const { winner, line } = calculateWinner(squares);
   let status;
   if (winner) {
-    status = `Winner: ${winner}`;
+    status = `Vencedor: ${winner}`;
   } else if (squares.every(square => square)) {
-    status = 'Game ended in a draw!';
+    status = 'Jogo empatado!';
   } else {
-    status = `Next player: ${xIsNext ? 'X' : 'O'}`;
+    status = `Próximo jogador: ${xIsNext ? 'X' : 'O'}`;
   }
 
   // Cria os quadrados de forma mais dinâmica
@@ -78,8 +78,8 @@ export default function Game() {
 
   const moves = history.map((step, move) => {
     const desc = move ? 
-      `Go to move #${move} (${step.moveLocation.row},${step.moveLocation.col})` : 
-      'Go to game start';
+      `Ir para movimento #${move} (${step.moveLocation.row},${step.moveLocation.col})` : 
+      'Recomeçar jogo';
     
     return (
       <li key={move}>
@@ -95,7 +95,7 @@ export default function Game() {
 
   return (
     <div className="app">
-      <h1>Tic Tac Toe</h1>
+      <h1>Jogo da Velha</h1>
       <div className="game">
         <div className="game-board">
           <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
@@ -103,7 +103,7 @@ export default function Game() {
         <div className="game-info">
           <div className="controls">
             <button onClick={() => setIsAscending(!isAscending)}>
-              Sort: {isAscending ? 'Ascending' : 'Descending'}
+              Ordenar: {isAscending ? 'Ascendente' : 'Descendente'}
             </button>
           </div>
           <ol>{isAscending ? moves : moves.reverse()}</ol>
