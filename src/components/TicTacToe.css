@@ -176,3 +176,22 @@
     background: #f0f2f5;
     color: var(--primary);
   }
+  .move-list li {
+    margin-bottom: 1rem; /
+  }
+  
+  .move-list li button {
+    width: 100%;
+    text-align: left;
+    background: none;
+    color: var(--dark);
+    padding: 0.75rem 0.5rem;
+    border-radius: var(--border-radius);
+    transition: var(--transition);
+  }
+  
+  .move-list li button:hover {
+    background: #f0f2f5;
+    color: var(--primary);
+  }
+  
