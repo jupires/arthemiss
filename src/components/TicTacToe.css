@@ -176,8 +176,10 @@
     background: #f0f2f5;
     color: var(--primary);
   }
+  
   .move-list li {
-    margin-bottom: 1rem; /
+    margin-bottom: 1rem; /* Espaço entre botões */
+    list-style: none;
   }
   
   .move-list li button {
@@ -194,4 +196,5 @@
     background: #f0f2f5;
     color: var(--primary);
   }
+  
   
