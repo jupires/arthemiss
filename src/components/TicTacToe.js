@@ -101,13 +101,13 @@ export default function Game() {
           <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
         </div>
         <div className="game-info">
-          <div className="controls">
-            <button onClick={() => setIsAscending(!isAscending)}>
-              Ordenar: {isAscending ? 'Ascendente' : 'Descendente'}
-            </button>
-          </div>
-          <ol>{isAscending ? moves : moves.reverse()}</ol>
-        </div>
+  <div className="controls">
+    <button onClick={() => jumpTo(0)}>
+      Recomeçar jogo
+    </button>
+  </div>
+  <ol className="move-list">{(isAscending ? moves : moves.reverse())}</ol>
+</div>
       </div>
     </div>
   );
