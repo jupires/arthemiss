@@ -76,22 +76,17 @@ export default function Game() {
     setCurrentMove(nextMove);
   }
 
-  const moves = history.map((step, move) => {
-    const desc = move ? 
-      `Ir para movimento #${move} (${step.moveLocation.row},${step.moveLocation.col})` : 
-      'Recomeçar jogo';
-    
-    return (
-      <li key={move}>
-        <button 
-          onClick={() => jumpTo(move)}
-          className={move === currentMove ? 'current-move' : ''}
-        >
-          {desc}
-        </button>
-      </li>
-    );
-  });
+  const moves = [
+    <li key={0}>
+      <button 
+        onClick={() => jumpTo(0)}
+        className={currentMove === 0 ? 'current-move' : ''}
+      >
+        Recomeçar jogo
+      </button>
+    </li>
+  ];
+  
 
   return (
     <div className="app">
@@ -106,7 +101,7 @@ export default function Game() {
       Recomeçar jogo
     </button>
   </div>
-  <ol className="move-list">{(isAscending ? moves : moves.reverse())}</ol>
+  <ol className="move-list">{moves}</ol>
 </div>
       </div>
     </div>
